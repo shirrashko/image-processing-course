@@ -3,11 +3,13 @@ import mediapy as mp
 import numpy as np
 import matplotlib.pyplot as plt
 
-# weight of each color channel when converting to grayscale by the RGB TO YIQ formula
+# Weight of each color channel when converting to grayscale by the RGB TO YIQ formula
 RED_WEIGHT = 0.299
 GREEN_WEIGHT = 0.587
 BLUE_WEIGHT = 0.114
-SQUARE_SIZE = 256  # hyperparameter for dividing the frame into squares
+
+# Hyperparameter for dividing the frame into squares
+SQUARE_SIZE = 256
 
 
 def read_video(video_path):
@@ -171,5 +173,5 @@ if __name__ == '__main__':
     print(sys.argv[1], sys.argv[2])
     main(sys.argv[1], sys.argv[2])
 
-# TODO: remove loops, understand the way the square works in my program, create graphs for the report
+# TODO: create graphs for the report
 # TODO: run pip3 freeze > requirements.txt again to update the requirements.txt file when finished
