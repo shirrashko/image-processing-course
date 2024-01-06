@@ -8,9 +8,8 @@ RED_WEIGHT = 0.299
 GREEN_WEIGHT = 0.587
 BLUE_WEIGHT = 0.114
 
-# Hyperparameter for dividing the frame into squares
-SQUARE_SIZE = 60
-
+# Maximum pixel value for normalization
+MAX_INTENSITY_VALUE = 255.0
 
 def _determine_square_size(frame):  # TODO: check this
     """
@@ -54,10 +53,10 @@ def normalize_frames(frames):
     :param frames: An array of frames.
     :return: An array of normalized frames.
     """
-    return frames / 255.0
+    return frames / MAX_INTENSITY_VALUE
 
 
-def divide_frame_into_squares(frame, square_size=SQUARE_SIZE):
+def divide_frame_into_squares(frame, square_size):
     """
     Divides a frame into smaller squares of specified size.
 
@@ -127,7 +126,7 @@ def normalize_differences(differences):
     return [(diff - min_diff) / (max_diff - min_diff) for diff in differences]
 
 
-def find_max_difference_scene_cut(frames, square_size=SQUARE_SIZE):
+def find_max_difference_scene_cut(frames, square_size):
     """
     Identifies the scene cut in the video based on the maximum frame difference.
 
@@ -144,7 +143,7 @@ def find_max_difference_scene_cut(frames, square_size=SQUARE_SIZE):
     return cut_frame_index, normalized_differences
 
 
-def plot_differences(cut_frame_index, differences):
+def plot_differences(cut_frame_index, differences, videp_type):
     """
     Plots the frame differences with markers indicating the scene cut.
 
@@ -153,7 +152,7 @@ def plot_differences(cut_frame_index, differences):
     """
     plt.figure(figsize=(10, 6))
     plt.plot(differences, marker='o', markersize=3)
-    plt.title('Frame Differences')
+    plt.title(f'Frame Differences for video from category {videp_type}')
     plt.xlabel('Frame Index')
     plt.ylabel('Normalized Difference')
     plt.axvline(x=cut_frame_index, color='r', linestyle='--', label=f'Cut at frame {cut_frame_index}')
@@ -175,7 +174,7 @@ def main(video_path, video_type):
 
     cut_frame_index, differences = find_max_difference_scene_cut(normalized_frames)
 
-    plot_differences(cut_frame_index, differences)
+    plot_differences(cut_frame_index, differences, video_type)
 
     return cut_frame_index, cut_frame_index + 1
 
