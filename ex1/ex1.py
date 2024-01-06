@@ -9,7 +9,18 @@ GREEN_WEIGHT = 0.587
 BLUE_WEIGHT = 0.114
 
 # Hyperparameter for dividing the frame into squares
-SQUARE_SIZE = 256
+SQUARE_SIZE = 60
+
+
+def _determine_square_size(frame):  # TODO: check this
+    """
+    Determines the square size based on the frame's dimensions.
+
+    :param frame: A frame from the video.
+    :return: Calculated square size.
+    """
+    rows, cols = frame.shape
+    return min(rows, cols) // 15
 
 
 def read_video(video_path):
